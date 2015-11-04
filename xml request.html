@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Testside</title>
+<style>
+table, th, td {
+   border: 1px solid black;
+}
+</style>
+<script>
+	
+window.onload = oppstart;
+ 
+var xmlhttp;
+ 
+function oppstart() {
+	
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = statusforanding;
+	xmlhttp.open("GET", "juice.csv", true);
+	xmlhttp.send();
+}
+
+
+function statusforanding() {
+	
+	if (xmlhttp.readyState === 4 && xmlhttp.status === 200 ) {
+	
+		var innhold = xmlhttp.responseText;
+		
+		var linjer = innhold.split("\n");
+		
+		var data = "<table>";
+		
+		
+		for(var i=0; i<linjer.length; i++) {
+			
+			var deler = linjer[i].split(";");
+		
+			if(deler.length === 2) {
+				 data += "<tr><td>" +  deler[0] + "</td><td>" + deler[1] + "</td></tr>\n";
+			}
+		}
+		
+		data += "</table>";
+		
+		document.getElementById("utskrift").innerHTML = data;
+		
+	}
+}
+	
+</script>
+<style>
+</style>
+</head>
+<body>
+	<div id="utskrift"></div>
+</body>
+</html>
+
+
